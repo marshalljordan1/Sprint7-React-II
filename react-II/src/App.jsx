@@ -53,9 +53,25 @@ function App() {
     setNumPages(event.target.value);
   };
 
+  const increasePages = () => {
+    setNumPages(numPages + 1);
+  };
+
+  const decreasePages = () => {
+    numPages > 0 ? setNumPages(numPages - 1) : setNumPages(0);
+  };
+
   const readLang = (event) => {
     setNumLangs(event.target.value);
   };
+  const increaseLangs = () => {
+    setNumLangs(numLangs + 1);
+  };
+
+  const decreaseLangs = () => {
+    numLangs > 0 ? setNumLangs(numLangs - 1) : setNumLangs(0);
+  };
+
   useEffect(() => {
     if (!webpageChecked) {
       setNumLangs(0);
@@ -76,6 +92,10 @@ function App() {
         onNumPagesChange={readPages}
         numLang={numLangs}
         onNumLangChange={readLang}
+        onPageIncrement={increasePages}
+        onPageDecrement={decreasePages}
+        onLangIncrement={increaseLangs}
+        onLangDecrement={decreaseLangs}
       />
       <Consultation checked={consultationChecked} onChange={addConsult} />
       <GoogleAds checked={googleAdChecked} onChange={addGoogle} />

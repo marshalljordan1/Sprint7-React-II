@@ -8,6 +8,10 @@ function Webpage({
   onNumPagesChange,
   numLang,
   onNumLangChange,
+  onPageIncrement,
+  onPageDecrement,
+  onLangIncrement,
+  onLangDecrement,
 }) {
   return (
     <>
@@ -18,6 +22,7 @@ function Webpage({
       {checked && (
         <PopUp>
           Number of pages <IncreaseButton onClick={increase}>+</IncreaseButton>
+          Number of pages <Increase onClick={onPageIncrement}>+</Increase>
           <input
             style={{ width: "30px" }}
             type="number"
@@ -30,6 +35,10 @@ function Webpage({
           <br />
           Number of languages{" "}
           <IncreaseButton onClick={increase}>+</IncreaseButton>
+          <Decrease onClick={onPageDecrement}>—</Decrease>
+          <br />
+          <br />
+          Number of languages <Increase onClick={onLangIncrement}>+</Increase>
           <input
             style={{ width: "30px" }}
             type="number"
@@ -38,6 +47,7 @@ function Webpage({
             onChange={onNumLangChange}
           />{" "}
           <DecreaseButton onClick={decrease}>—</DecreaseButton>
+          <Decrease onClick={onLangDecrement}>—</Decrease>
         </PopUp>
       )}
     </>
