@@ -1,4 +1,5 @@
 import { Decrease, Increase, PopUp } from "../src/styled";
+import { IncreaseButton, DecreaseButton } from "./Buttons";
 
 function Webpage({
   checked,
@@ -20,6 +21,7 @@ function Webpage({
       <br />
       {checked && (
         <PopUp>
+          Number of pages <IncreaseButton onClick={increase}>+</IncreaseButton>
           Number of pages <Increase onClick={onPageIncrement}>+</Increase>
           <input
             style={{ width: "30px" }}
@@ -28,6 +30,11 @@ function Webpage({
             value={numPages}
             onChange={onNumPagesChange}
           />{" "}
+          <DecreaseButton onClick={decrease}>—</DecreaseButton>
+          <br />
+          <br />
+          Number of languages{" "}
+          <IncreaseButton onClick={increase}>+</IncreaseButton>
           <Decrease onClick={onPageDecrement}>—</Decrease>
           <br />
           <br />
@@ -39,6 +46,7 @@ function Webpage({
             value={numLang}
             onChange={onNumLangChange}
           />{" "}
+          <DecreaseButton onClick={decrease}>—</DecreaseButton>
           <Decrease onClick={onLangDecrement}>—</Decrease>
         </PopUp>
       )}

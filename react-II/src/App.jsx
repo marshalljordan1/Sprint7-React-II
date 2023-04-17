@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import Welcome from "../components/Welcome";
 import Webpage from "../components/Webpage";
 import Consultation from "../components/Consultation";
 import GoogleAds from "../components/GoogleAds";
@@ -6,6 +7,7 @@ import Price from "../components/Price";
 import "./index.css";
 
 function App() {
+  const [welcome, setWelcome] = useState(true);
   const [serviceTotal, setServiceTotal] = useState(0);
   const [finalTotal, setFinalTotal] = useState(0);
   const [webpageChecked, setWebpageChecked] = useState(false);
@@ -13,6 +15,10 @@ function App() {
   const [googleAdChecked, setGoogleAdChecked] = useState(false);
   const [numPages, setNumPages] = useState(0);
   const [numLangs, setNumLangs] = useState(0);
+
+  const click = () => {
+    setWelcome(false); 
+  } 
 
   // Defining a function addWeb which will be called when the "A web page" checkbox is clicked
   const addWeb = (event) => {
@@ -58,7 +64,6 @@ function App() {
   const readLang = (event) => {
     setNumLangs(event.target.value);
   };
-
   const increaseLangs = () => {
     setNumLangs(numLangs + 1);
   };
@@ -76,9 +81,9 @@ function App() {
   }, [numLangs, numPages, serviceTotal]);
 
   return (
-    // welcome === true ? (
-    //   <Welcome readMore={click} />
-    // ) :
+    welcome === true ? (
+    <Welcome click={click} />
+    ) :
     <div>
       <Webpage
         checked={webpageChecked}
