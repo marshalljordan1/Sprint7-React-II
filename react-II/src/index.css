@@ -1,0 +1,26 @@
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.container {
+    text-align: center;
+    font-size: larger;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.border {
+    max-width: 70%;
+    border: solid black;
+    margin-bottom: 10px;
+} 
+
+.click-here {
+    font-size: large;
+    padding: 10px 20px;
+}
+

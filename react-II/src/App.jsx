@@ -1,15 +1,24 @@
 import { useEffect, useState } from "react";
-import { PopUp } from "./styled.js";
+import Welcome from "../components/Welcome";
+import Webpage from "../components/Webpage";
+import Consultation from "../components/Consultation";
+import GoogleAds from "../components/GoogleAds";
+import Price from "../components/Price";
+import "./index.css";
 
 function App() {
+  const [welcome, setWelcome] = useState(true);
   const [serviceTotal, setServiceTotal] = useState(0);
-  debugger;
   const [finalTotal, setFinalTotal] = useState(0);
   const [webpageChecked, setWebpageChecked] = useState(false);
   const [consultationChecked, setConsultationChecked] = useState(false);
   const [googleAdChecked, setGoogleAdChecked] = useState(false);
   const [numPages, setNumPages] = useState(0);
   const [numLangs, setNumLangs] = useState(0);
+
+  const click = () => {
+    setWelcome(false); 
+  } 
 
   // Defining a function addWeb which will be called when the "A web page" checkbox is clicked
   const addWeb = (event) => {
@@ -47,41 +56,30 @@ function App() {
   const readLang = (event) => {
     setNumLangs(event.target.value);
   };
-
   useEffect(() => {
-    if (numLangs < 0 && numPages < 0) {
-      setFinalTotal(serviceTotal);
+    if (!webpageChecked) {
+      setNumLangs(0);
+      setNumPages(0);
     } else if (finalTotal !== serviceTotal + numPages * numLangs * 30);
     setFinalTotal(serviceTotal + numPages * numLangs * 30);
   }, [numLangs, numPages, serviceTotal]);
 
   return (
-    // welcome === true ? (
-    //   <Welcome readMore={click} />
-    // ) :
+    welcome === true ? (
+    <Welcome click={click} />
+    ) :
     <div>
-      <p>What do you want to do?</p>
-      <input type="checkbox" checked={webpageChecked} onChange={addWeb} /> A web
-      page (500€)
-      <br />
-      {webpageChecked === true ? (
-        <PopUp>
-          Number of pages <input type="number" min="0" onChange={readPages} />
-          <br />
-          <br />
-          Number of languages{" "}
-          <input type="number" min="0" onChange={readLang} />
-        </PopUp>
-      ) : null}
-      <input
-        type="checkbox"
-        checked={consultationChecked}
-        onChange={addConsult}
-      />{" "}
-      A SEO consultancy (300€) <br />
-      <input type="checkbox" checked={googleAdChecked} onChange={addGoogle} /> A
-      Google Ads campaign (200€) <br />
-      <p>Price: {finalTotal}€</p>
+      <Webpage
+        checked={webpageChecked}
+        onChange={addWeb}
+        numPages={numPages}
+        onNumPagesChange={readPages}
+        numLang={numLangs}
+        onNumLangChange={readLang}
+      />
+      <Consultation checked={consultationChecked} onChange={addConsult} />
+      <GoogleAds checked={googleAdChecked} onChange={addGoogle} />
+      <Price total={finalTotal} />
     </div>
   );
 }
