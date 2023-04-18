@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import Welcome from "../components/Welcome";
+// import Welcome from "../components/Welcome";
 import Webpage from "../components/Webpage";
 import Consultation from "../components/Consultation";
 import GoogleAds from "../components/GoogleAds";
@@ -7,7 +7,7 @@ import Price from "../components/Price";
 import "./index.css";
 
 function App() {
-  const [welcome, setWelcome] = useState(true);
+  // const [welcome, setWelcome] = useState(true);
   const [serviceTotal, setServiceTotal] = useState(0);
   const [finalTotal, setFinalTotal] = useState(0);
   const [webpageChecked, setWebpageChecked] = useState(false);
@@ -16,9 +16,9 @@ function App() {
   const [numPages, setNumPages] = useState(0);
   const [numLangs, setNumLangs] = useState(0);
 
-  const click = () => {
-    setWelcome(false); 
-  } 
+  // const click = () => {
+  //   setWelcome(false);
+  // }
 
   // Defining a function addWeb which will be called when the "A web page" checkbox is clicked
   const addWeb = (event) => {
@@ -27,6 +27,8 @@ function App() {
       event.target.checked ? serviceTotal + webpage : serviceTotal - webpage
     ); // Updating the serviceTotal based on whether the checkbox is checked or unchecked
     setWebpageChecked(event.target.checked); // Updating the webpageChecked state variable based on whether the checkbox is checked or unchecked
+    localStorage.setItem("webpageChecked", JSON.stringify(event.target.checked));
+
   };
 
   // Defining a function addWeb which will be called when the "addConsult" checkbox is clicked
@@ -38,6 +40,7 @@ function App() {
         : serviceTotal - consultation
     );
     setConsultationChecked(event.target.checked);
+    localStorage.setItem("consultationChecked", JSON.stringify(event.target.checked));
   };
 
   // Defining a function addWeb which will be called when the "addGoogle" checkbox is clicked
@@ -47,10 +50,12 @@ function App() {
       event.target.checked ? serviceTotal + googleAd : serviceTotal - googleAd
     );
     setGoogleAdChecked(event.target.checked);
+    localStorage.setItem("googleAdChecked", JSON.stringify(event.target.checked));
   };
 
   const readPages = (event) => {
     setNumPages(event.target.value);
+    localStorage.setItem("numPages", JSON.stringify(event.target.value));
   };
 
   const increasePages = () => {
@@ -63,6 +68,7 @@ function App() {
 
   const readLang = (event) => {
     setNumLangs(event.target.value);
+    localStorage.setItem("numLangs", JSON.stringify(event.target.value));
   };
   const increaseLangs = () => {
     setNumLangs(numLangs + 1);
@@ -76,14 +82,46 @@ function App() {
     if (!webpageChecked) {
       setNumLangs(0);
       setNumPages(0);
-    } else if (finalTotal !== serviceTotal + numPages * numLangs * 30);
-    setFinalTotal(serviceTotal + numPages * numLangs * 30);
-  }, [numLangs, numPages, serviceTotal]);
+      setFinalTotal(serviceTotal);
+    } else if (finalTotal !== serviceTotal + numPages * numLangs * 30) {
+      setFinalTotal(serviceTotal + numPages * numLangs * 30);
+    }
+  }, [numLangs, numPages, serviceTotal, webpageChecked, finalTotal]);
+
+  useEffect(() => {
+    const savedPages = localStorage.getItem("numPages");
+    const savedLangs = localStorage.getItem("numLangs");
+    const savedCheckedWebpage = localStorage.getItem("webpageChecked");
+    const savedCheckedConsultation = localStorage.getItem("consultationChecked");
+    const savedCheckedGoogleAds = localStorage.getItem("googleAdChecked");
+    const savedFinalTotal = localStorage.getItem("finalTotal");
+
+    if (savedCheckedWebpage) {
+      setWebpageChecked(JSON.parse(savedCheckedWebpage));
+    }
+    if (savedCheckedConsultation) {
+      setConsultationChecked(JSON.parse(savedCheckedConsultation));
+    }
+
+    if (savedCheckedGoogleAds) {
+      setGoogleAdChecked(JSON.parse(savedCheckedGoogleAds));
+    }
+    if (savedPages) {
+      setNumPages(JSON.parse(savedPages));
+    }
+    if (savedLangs) {
+      setNumLangs(JSON.parse(savedLangs));
+    }
+
+    if (savedFinalTotal) {
+      setFinalTotal(JSON.parse(savedFinalTotal));
+    }
+  }, []);
 
   return (
-    welcome === true ? (
-    <Welcome click={click} />
-    ) :
+    // welcome === true ? (
+    // <Welcome click={click} />
+    // ) :
     <div>
       <Webpage
         checked={webpageChecked}
