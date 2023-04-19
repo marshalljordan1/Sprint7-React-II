@@ -117,25 +117,16 @@ function App() {
     const savedCheckedGoogleAds = localStorage.getItem("googleAdChecked");
     const savedTotal = localStorage.getItem("total");
 
-    if (savedCheckedWebpage) {
-      setWebpageChecked(JSON.parse(savedCheckedWebpage));
-    }
-    if (savedCheckedConsultation) {
-      setConsultationChecked(JSON.parse(savedCheckedConsultation));
-    }
-
-    if (savedCheckedGoogleAds) {
-      setGoogleAdChecked(JSON.parse(savedCheckedGoogleAds));
-    }
-    if (savedPages) {
-      setNumPages(JSON.parse(savedPages));
-    }
-    if (savedLangs) {
-      setNumLangs(JSON.parse(savedLangs));
-    }
-    if (savedTotal) {
-      setTotal(parseInt(savedTotal));
-    }
+    setWebpageChecked(savedCheckedWebpage && JSON.parse(savedCheckedWebpage));
+    setConsultationChecked(
+      savedCheckedConsultation && JSON.parse(savedCheckedConsultation)
+    );
+    setGoogleAdChecked(
+      savedCheckedGoogleAds && JSON.parse(savedCheckedGoogleAds)
+    );
+    setNumPages(savedPages && JSON.parse(savedPages));
+    setNumLangs(savedLangs && JSON.parse(savedLangs));
+    setTotal(savedTotal && parseInt(savedTotal));
   }, []);
 
   return (
